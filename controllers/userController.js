@@ -7,5 +7,10 @@ exports.createUser = async (req, res) => {
       message: "User created !!!",
       data: { newUser },
     });
-  } catch (error) {}
+  } catch (error) {
+    res.status(400).json({
+      message: "Fail !!!",
+      error: error,
+    });
+  }
 };

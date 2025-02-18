@@ -1,6 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
+const userRoutes = require("./routes/userRoutes");
 dotenv.config({ path: "./.env" });
 
 const DB = process.env.DATABASE.replace(
@@ -18,7 +19,8 @@ mongoose
   });
 
 const app = express();
-
+app.use(express.json());
+app.use("/users", userRoutes);
 const port = 1234;
 
 app.listen(port, () => {
