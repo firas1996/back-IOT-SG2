@@ -1,5 +1,38 @@
 const User = require("../models/userModel");
 
+exports.signup = async (req, res) => {
+  try {
+    // solution 1 :
+    // const newUser = await User.create({
+    //   name: req.body.name,
+    //   email: req.body.email,
+    //   password: req.body.password,
+    //   confirmPassword: req.body.confirmPassword,
+    //   role: "user",
+    // });
+    // solution 2 :
+    // const { name, email, password, confirmPassword } = req.body;
+    // const newUser = await User.create({
+    //   name,
+    //   email,
+    //   password,
+    //   confirmPassword,
+    //   role: "user",
+    // });
+    // solution 3 :
+    const newUser = await User.create({ ...req.body, role: "user" });
+    res.status(201).json({
+      message: "User created !!!",
+      data: { newUser },
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: "Fail !!!",
+      error: error,
+    });
+  }
+};
+
 exports.createUser = async (req, res) => {
   try {
     const newUser = await User.create(req.body);

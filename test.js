@@ -1,9 +1,4 @@
-(a, b) => {
-  return a + b;
+const max = (tab) => {
+  return Math.max(...tab);
 };
-
-const x = (a, b) => {
-  return a + b;
-};
-
-console.log(x(3, 7));
+console.log(max([3, 2, 4, 4, 77, 20, 331]));
