@@ -32,8 +32,46 @@ exports.updateUser = async (req, res) => {
   }
 };
 
-exports.getUser = async (req, res) => {};
+exports.getUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    res.status(200).json({
+      message: "User Fetched !!!",
+      data: { user },
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: "Fail !!!",
+      error: error,
+    });
+  }
+};
 
-exports.getUsers = async (req, res) => {};
+exports.getUsers = async (req, res) => {
+  try {
+    const users = await User.find();
+    res.status(200).json({
+      message: "Users Fetched !!!",
+      data: { users },
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: "Fail !!!",
+      error: error,
+    });
+  }
+};
 
-exports.deleteUser = async (req, res) => {};
+exports.deleteUser = async (req, res) => {
+  try {
+    await User.findByIdAndDelete(req.params.id);
+    res.status(204).json({
+      message: "User Fetched !!!",
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: "Fail !!!",
+      error: error,
+    });
+  }
+};
