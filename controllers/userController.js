@@ -5,6 +5,31 @@ const createToken = (id, name) => {
   return jwt.sign({ id, name }, process.env.SECRET_KEY, { expiresIn: "90d" });
 };
 
+exports.prottectorMW = async (req, res, next) => {
+  try {
+    let token;
+    // 1) bech nthabat ken el user 3ando token wala lé
+    if (
+      req.headers.authorization &&
+      req.headers.authorization.startsWith("Bearer")
+    ) {
+      token = req.headers.authorization.split(" ")[1];
+    }
+    // 2) bech nthabat ken el token valid or not
+
+    // 3) bech nthabat ken el user tfasa5 wala mizel mawjoud
+
+    // 4) bech nthabtou ken el token tsan3et 9bal ma yetbadal el pass or not
+
+    return next();
+  } catch (error) {
+    res.status(400).json({
+      message: "Fail !!!",
+      error: error,
+    });
+  }
+};
+
 exports.signup = async (req, res) => {
   try {
     // solution 1 :
