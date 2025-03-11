@@ -1,5 +1,6 @@
 const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
+const { promisify } = require("util");
 
 const createToken = (id, name) => {
   return jwt.sign({ id, name }, process.env.SECRET_KEY, { expiresIn: "90d" });
@@ -15,7 +16,18 @@ exports.prottectorMW = async (req, res, next) => {
     ) {
       token = req.headers.authorization.split(" ")[1];
     }
+    if (!token) {
+      return res.status(401).json({
+        message: "You are not logged in !!!",
+      });
+    }
     // 2) bech nthabat ken el token valid or not
+
+    const validToken = await promisify(jwt.verify)(
+      token,
+      process.env.SECRET_KEY
+    );
+    console.log(validToken);
 
     // 3) bech nthabat ken el user tfasa5 wala mizel mawjoud
 
