@@ -27,9 +27,16 @@ exports.prottectorMW = async (req, res, next) => {
       token,
       process.env.SECRET_KEY
     );
-    console.log(validToken);
+    // console.log(validToken);
 
     // 3) bech nthabat ken el user tfasa5 wala mizel mawjoud
+
+    const user = await User.findById(validToken.id);
+    if (!user) {
+      return res.status(401).json({
+        message: "User no longer exist !!!",
+      });
+    }
 
     // 4) bech nthabtou ken el token tsan3et 9bal ma yetbadal el pass or not
 
