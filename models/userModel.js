@@ -59,6 +59,10 @@ userSchema.methods.isPasswordValid = async function (
   return await bcryptjs.compare(userPassword, crypdetPassword);
 };
 
+userSchema.methods.verifyToken = function (tokenIAT) {
+  return parseInt(this.pass_change_time.getTime() / 1000) > tokenIAT;
+};
+
 const User = mongoose.model("User", userSchema);
 
 module.exports = User;

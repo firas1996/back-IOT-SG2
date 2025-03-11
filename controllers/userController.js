@@ -32,6 +32,7 @@ exports.prottectorMW = async (req, res, next) => {
     // 3) bech nthabat ken el user tfasa5 wala mizel mawjoud
 
     const user = await User.findById(validToken.id);
+    // console.log(user)
     if (!user) {
       return res.status(401).json({
         message: "User no longer exist !!!",
@@ -39,6 +40,12 @@ exports.prottectorMW = async (req, res, next) => {
     }
 
     // 4) bech nthabtou ken el token tsan3et 9bal ma yetbadal el pass or not
+
+    if (user.verifyToken(validToken.iat)) {
+      return res.status(401).json({
+        message: "Token no longer exist !!!",
+      });
+    }
 
     return next();
   } catch (error) {
